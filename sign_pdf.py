@@ -33,7 +33,7 @@ def firmar_archivo(archivo_in: str, firmaID: str, x_coordenada: int, #Funcion qu
         pg.AnnotPushBack(campoFirma)#metodo que Agrega una anotación al final de la matriz de anotaciones de una página.
     # imagen de la firma
     firm_nombrearch = os.path.dirname( #funcion extrae la carpeta principal de la ruta en Python
-        os.path.abspath(__file__)) + "\static\signature.jpg"
+        os.path.abspath(__file__)) + "\static\Firma_ejemplo.jpg"
     # Self signed certificate
     pk_archivonombre = os.path.dirname(
         os.path.abspath(__file__)) + "\static\container.pfx" #abspath() toma una ruta o un nombre de archivo como parámetro que representa una ruta del sistema de archivos.
