@@ -37,10 +37,10 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
                                    +"\n\nCarpeta de Salida: "+carpetasalida)
     #Label(root, text=response).pack()
     
-    if response == 1:
-        Label(root, text="Stop it bro").pack()
-    else:
-        Label(root, text="What have u done").pack()
+    # if response == 1:
+    #     Label(root, text="Stop it bro").pack()
+    # else:
+    #     Label(root, text="What have u done").pack()
 
 #----------------------------------------
 
