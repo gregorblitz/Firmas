@@ -4,4 +4,5 @@
 - Tkinter version 8.6 Se puede comprobar con: `import tkinter` ; `tkinter.TkVersion`
 - Pillow version 9.2.0 Se puede comprobar con: `import PIL` ; `PIL.__version__` 
 
+- Un correcto funcionamiento debería correr así:
 ![My Image](GUI.png)
