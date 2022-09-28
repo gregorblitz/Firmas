@@ -141,7 +141,7 @@ botonSalCarpeta = Button(archivos, text="Abrir",command = carpSalida,font=(fuent
 #Label(archivos, text="...", textvariable = SalCarpeta, font=(fuente, 14)).grid(row=4, column=0, sticky=W, pady=10) #Para probar nada mas
 
 botonComenzar = Button(archivos, width=15, text='Comenzar', font=(fuente, 14)
-                       , command=lambda: resumen(entradaNombre.get(),entradaApellido.get(),Firmado.get(),EntCarpeta.get(),SalCarpeta.get())) #command=lambda: button_click(1)
+                       , command=lambda: resumen(entradaNombre.get(),entradaApellido.get(),Firmado.get(),EntCarpeta.get(),SalCarpeta.get()))
 botonComenzar.grid(row=7, column=1, pady=10, padx=20)
 
 #-------------------------------------------
