@@ -207,7 +207,7 @@ root.mainloop()
 from PIL import Image, ImageDraw,ImageFont
 from datetime import datetime
 
-# Nombre y Apellidos
+# Nombre y fecha
 #Carfar Imagen de base
 base=Image.open("base.png").convert("RGBA")
 # Crear Capa Para superponer
