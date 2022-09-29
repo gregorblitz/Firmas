@@ -6,10 +6,10 @@ Created on Mon Sep 26 08:59:54 2022
 """
 
 from tkinter import *
-from PIL import ImageTk,Image
+from PIL import ImageTk,Image,ImageDraw,ImageFont
 from tkinter import messagebox
 from tkinter import filedialog
-
+from datetime import datetime
 
 
 #---------FUNCIONES-----------
@@ -41,6 +41,39 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
     #     Label(root, text="Stop it bro").pack()
     # else:
     #     Label(root, text="What have u done").pack()
+    
+def cargarFirma(nombre,apellido,opcion):
+    
+    # Nombre y fecha
+    #Cargar Imagen de base
+    base=Image.open("base.png").convert("RGBA")
+    # Crear Capa Para superponer
+    txt=Image.new("RGBA",base.size,(255,255,255,0))
+    #Definir Fuente
+    fnt=ImageFont.truetype("arial.ttf",50)
+    Nombres=ImageDraw.Draw(txt)
+
+    #Dibujar Texto Con Transparencia 128
+    Nombres.text((150,200),str(nombre)+" "+str(apellido),font=fnt,fill=(0,0,0,250))
+
+
+     #Superponer
+    out=Image.alpha_composite(base,txt)
+    # #Mostrar
+    #out.show()
+    # Guardar
+    out.save("Nombres.png")
+    
+    #Fecha y Hora
+    today=datetime.today()
+
+    base_1=Image.open("base_1.png").convert("RGBA")
+    txt_1=Image.new("RGBA",base_1.size,(255,255,255,0))
+    Fecha=ImageDraw.Draw(txt_1)
+    Fecha.text((150,200),str(today),font=fnt,fill=(0,0,0,250))
+    out=Image.alpha_composite(base_1,txt_1)
+    #out.show()
+    out.save("Fecha_hora.png")
 
 #----------------------------------------
 
@@ -122,7 +155,9 @@ menuFirma.config(width=10, font=(fuente, 14))
 
 ubicacionFirma = StringVar()
 Label(ConfigInicial, text="Cargar Firma: ", font=(fuente, 14)).grid(row=3, column=0, sticky=W, pady=10)
-botonCargar = Button(ConfigInicial, text="Abrir",command = abrirFirma,font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=20)
+botonCargar = Button(ConfigInicial, text="Abrir",command = abrirFirma,font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=10)
+botonMostrar = Button(ConfigInicial, text="Cargar",
+                      command = lambda: cargarFirma(entradaNombre.get(),entradaApellido.get(),""),font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=80)
 #Label(ConfigInicial, text="...", textvariable = ubicacionFirma, font=(fuente, 14)).grid(row=4, column=0, sticky=W, pady=10) #Para probar nada mas
 #--------------------------------------------
 
@@ -154,87 +189,9 @@ archivos.place(x=500, y=150)
 
 
 
-#-----------------FRAMES------------------------
-# Autor = LabelFrame(root, text="Autor de la Firma",padx=250)
-# Autor.grid(row=2, column=0,columnspan=3,sticky=N+S+W)
-# Carpeta = LabelFrame(root, text="Ubicacion de entrada y salida de archivos",padx=250)
-# Carpeta.grid(row=3, column=0,columnspan=3,sticky=N+S+W)
-#----------------------------------------------
-
-#---------------Entradas----------------------
-
-
-# labelNombre = Label(root,text="Nombre: ",font=("DIN Alternate",12))
-# labelNombre.grid(row=2, column=0)
-
-
-# E1 = Entry(root, bd =5)
-# E1.grid(row=2, column=1)
-
-# labelFirma = Label(Autor,text="Tipo de Firma: ",font=("DIN Alternate",12))
-# labelFirma.pack(side=RIGHT)
-
-
-# menuFirma.grid(row=1, column=0)
-
-#e=Entry(Autor,width=50,borderwidth=2).grid(row=0,column=1)
-# e.insert(0,"Su nombre muchacho ")
-
-# b = Button(Autor, text = "Press me")
-# b2 = Button(Autor, text = "Press me better")
-# b.grid(row = 0, column = 0)
-# b2.grid(row = 1, column = 1)
-
-# b3 = Button(Carpeta, text = "Press me")
-# b4 = Button(Carpeta, text = "Press me better")
-# b3.grid(row = 0, column = 0)
-# b4.grid(row = 1, column = 1)
-
-
-
-
-
-# def opensave():
-#     root.filename = filedialog.askopenfilename(initialdir = "G:\My Drive\Claro GEN XXI\PruebasTkinter",title = "Select file", filetypes =(("png files","*.png"),("all files","*.*")))
-#     #my_label = Label(root, text=root.filename).pack()
-
-
-# boton = Button(root, text="Open File",command=opensave).pack()
 
 
 root.mainloop()
 
-from PIL import Image, ImageDraw,ImageFont
-from datetime import datetime
-
-# Nombre y fecha
-#Carfar Imagen de base
-base=Image.open("base.png").convert("RGBA")
-# Crear Capa Para superponer
-txt=Image.new("RGBA",base.size,(255,255,255,0))
-#Definir Fuente
-fnt=ImageFont.truetype("arial.ttf",50)
-Nombres=ImageDraw.Draw(txt)
-
-N=entradaNombre.get()
-A=entradaApellido.get()
-#Dibujar Texto Con Transparencia 128
-Nombres.text((150,200),str(N)+" "+str(A),font=fnt,fill=(0,0,0,250))
 
 
-#Superponer
-out=Image.alpha_composite(base,txt)
-#Mostrar
-out.show()
-#Guardar
-out.save("Nombres.png")
-#Fecha y Hora
-today=datetime.today()
-
-base_1=Image.open("base_1.png").convert("RGBA")
-txt_1=Image.new("RGBA",base_1.size,(255,255,255,0))
-Fecha=ImageDraw.Draw(txt_1)
-Fecha.text((150,200),str(today),font=fnt,fill=(0,0,0,250))
-out=Image.alpha_composite(base_1,txt_1)
-out.show()
-out.save("Fecha y hora.png")
