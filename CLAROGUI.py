@@ -203,3 +203,38 @@ archivos.place(x=500, y=150)
 
 
 root.mainloop()
+
+from PIL import Image, ImageDraw,ImageFont
+from datetime import datetime
+
+# Nombre y Apellidos
+#Carfar Imagen de base
+base=Image.open("base.png").convert("RGBA")
+# Crear Capa Para superponer
+txt=Image.new("RGBA",base.size,(255,255,255,0))
+#Definir Fuente
+fnt=ImageFont.truetype("arial.ttf",50)
+Nombres=ImageDraw.Draw(txt)
+
+N=entradaNombre.get()
+A=entradaApellido.get()
+#Dibujar Texto Con Transparencia 128
+Nombres.text((150,200),str(N)+" "+str(A),font=fnt,fill=(0,0,0,250))
+
+
+#Superponer
+out=Image.alpha_composite(base,txt)
+#Mostrar
+out.show()
+#Guardar
+out.save("Nombres.png")
+#Fecha y Hora
+today=datetime.today()
+
+base_1=Image.open("base_1.png").convert("RGBA")
+txt_1=Image.new("RGBA",base_1.size,(255,255,255,0))
+Fecha=ImageDraw.Draw(txt_1)
+Fecha.text((150,200),str(today),font=fnt,fill=(0,0,0,250))
+out=Image.alpha_composite(base_1,txt_1)
+out.show()
+out.save("Fecha y hora.png")
