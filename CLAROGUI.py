@@ -42,38 +42,41 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
     # else:
     #     Label(root, text="What have u done").pack()
     
-def cargarFirma(nombre,apellido,opcion):
+def cargarFirma(nombre,apellido,opcion,ubicFirma):
     
-    # Nombre y fecha
-    #Cargar Imagen de base
-    base=Image.open("base.png").convert("RGBA")
-    # Crear Capa Para superponer
-    txt=Image.new("RGBA",base.size,(255,255,255,0))
-    #Definir Fuente
-    fnt=ImageFont.truetype("arial.ttf",50)
-    Nombres=ImageDraw.Draw(txt)
+    if opcion=="Manuscrito":
+        firmapuesta = Image.open(ubicFirma)
+        firmapuesta = firmapuesta.resize((220,80))
+        firmapuestaimg = ImageTk.PhotoImage(firmapuesta)
+                              
+        firmafinal = Label(firmamos,image=firmapuestaimg) 
+        firmafinal.image = firmapuestaimg
+        firmafinal.grid(row=1, column=0,padx=80)
+    else:
+        base=Image.open("base.png").convert("RGBA")
+        txt=Image.new("RGBA",base.size,(255,255,255,0))
+        fnt=ImageFont.truetype("arial.ttf",50)
+        Nombres=ImageDraw.Draw(txt)
+        Nombres.text((150,200),str(nombre)+" "+str(apellido),font=fnt,fill=(0,0,0,250))
+        out=Image.alpha_composite(base,txt)
+        out.save("Nombres.png")
 
-    #Dibujar Texto Con Transparencia 128
-    Nombres.text((150,200),str(nombre)+" "+str(apellido),font=fnt,fill=(0,0,0,250))
-
-
-     #Superponer
-    out=Image.alpha_composite(base,txt)
-    # #Mostrar
-    #out.show()
-    # Guardar
-    out.save("Nombres.png")
-    
-    #Fecha y Hora
-    today=datetime.today()
-
-    base_1=Image.open("base_1.png").convert("RGBA")
-    txt_1=Image.new("RGBA",base_1.size,(255,255,255,0))
-    Fecha=ImageDraw.Draw(txt_1)
-    Fecha.text((150,200),str(today),font=fnt,fill=(0,0,0,250))
-    out=Image.alpha_composite(base_1,txt_1)
-    #out.show()
-    out.save("Fecha_hora.png")
+        today=datetime.today()
+        base_1=Image.open("base_1.png").convert("RGBA")
+        txt_1=Image.new("RGBA",base_1.size,(255,255,255,0))
+        Fecha=ImageDraw.Draw(txt_1)
+        Fecha.text((150,200),str(today),font=fnt,fill=(0,0,0,250))
+        out=Image.alpha_composite(base_1,txt_1)
+        #out.show()
+        out.save("Fecha_hora.png")
+        
+        firmapuesta = Image.open("Nombres.png")
+        firmapuesta = firmapuesta.resize((220,80))
+        firmapuestaimg = ImageTk.PhotoImage(firmapuesta)
+                              
+        firmafinal = Label(firmamos,image=firmapuestaimg) 
+        firmafinal.image = firmapuestaimg
+        firmafinal.grid(row=1, column=0,padx=80)
 
 #----------------------------------------
 
@@ -83,7 +86,7 @@ def cargarFirma(nombre,apellido,opcion):
 root = Tk()
 
 #Tamaño de la ventana
-root.geometry("940x400")
+root.geometry("940x600")
 root.resizable(False,False) #No permite hacer la ventana mas grande
 
 #Permite colocarle un titulo al programa
@@ -125,6 +128,7 @@ LogoGPoner.grid(row=1, column=2)
 #------------Hacer los dos frames--------------
 ConfigInicial = Frame(root, bd=2, relief=SOLID, padx=10, pady=10)
 archivos = Frame(root, bd=2, relief=SOLID, padx=10, pady=10)
+firmamos = Frame(root, bd=2, relief=SOLID, padx=10, pady=10)
 #----------------------------------------------
 
 #------------------Para ingresar Nombre--------
@@ -157,11 +161,18 @@ ubicacionFirma = StringVar()
 Label(ConfigInicial, text="Cargar Firma: ", font=(fuente, 14)).grid(row=3, column=0, sticky=W, pady=10)
 botonCargar = Button(ConfigInicial, text="Abrir",command = abrirFirma,font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=10)
 botonMostrar = Button(ConfigInicial, text="Cargar",
-                      command = lambda: cargarFirma(entradaNombre.get(),entradaApellido.get(),""),font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=80)
+                      command = lambda: cargarFirma(entradaNombre.get(),entradaApellido.get(),Firmado.get(),ubicacionFirma.get()),font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=80)
 #Label(ConfigInicial, text="...", textvariable = ubicacionFirma, font=(fuente, 14)).grid(row=4, column=0, sticky=W, pady=10) #Para probar nada mas
 #--------------------------------------------
 
 ConfigInicial.place(x=50, y=150)
+
+
+Label(firmamos, text="Firma ingresada: ", font=(fuente, 14)).grid(row=0, column=0, sticky=W, pady=10)
+
+
+
+firmamos.place(x=50,y=400)
 
 #--------Frame Derecho-------------------
 EntCarpeta = StringVar()
@@ -181,14 +192,6 @@ botonComenzar.grid(row=7, column=1, pady=10, padx=20)
 
 #-------------------------------------------
 archivos.place(x=500, y=150)
-
-
-
-
-
-
-
-
 
 
 root.mainloop()
