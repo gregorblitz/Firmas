@@ -15,8 +15,20 @@ from datetime import datetime
 #---------FUNCIONES-----------
 
 def abrirFirma():
-    root.filename = filedialog.askopenfilename(initialdir = "C:",title = "Seleccionar Firma", filetypes =(("png files","*.png"),("all files","*.*")))
+    root.filename = filedialog.askopenfilename(initialdir = "C:",title = "Seleccionar Firma", filetypes =( ('image files', ('*.png', '*.jpg')),("all files","*.*")))
     ubicacionFirma.set(root.filename)
+    
+    
+def tipodeFirma(tipoFirmaobt):
+    
+    if tipoFirmaobt=="Nombre":
+        cargarFirma(entradaNombre.get(),entradaApellido.get(),"Nombre","")
+    elif tipoFirmaobt=="Manuscrito":
+        
+        Label(ConfigInicial, text="Cargar Firma: ", font=(fuente, 14)).grid(row=3, column=0, sticky=W, pady=10)
+        botonCargar = Button(ConfigInicial, text="  Abrir archivo..  ",command = abrirFirma,font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=10)
+        botonMostrar = Button(ConfigInicial, text="Cargar",command = lambda: cargarFirma(entradaNombre.get(),entradaApellido.get(),Firmado.get(),ubicacionFirma.get()),font=(fuente, 14)).grid(row=3, column=2, sticky=W, pady=10,padx=10)
+
 
 def carpEntrada():
     filename = filedialog.askdirectory()
@@ -86,7 +98,7 @@ def cargarFirma(nombre,apellido,opcion,ubicFirma):
 root = Tk()
 
 #Tamaño de la ventana
-root.geometry("940x600")
+root.geometry("1000x600")
 root.resizable(False,False) #No permite hacer la ventana mas grande
 
 #Permite colocarle un titulo al programa
@@ -125,10 +137,11 @@ LogoGPoner.grid(row=1, column=2)
 #----------------------------------------------
 
 
-#------------Hacer los dos frames--------------
+#------------Hacer los frames--------------
 ConfigInicial = Frame(root, bd=2, relief=SOLID, padx=10, pady=10)
 archivos = Frame(root, bd=2, relief=SOLID, padx=10, pady=10)
 firmamos = Frame(root, bd=2, relief=SOLID, padx=10, pady=10)
+progreso = Frame(root, bd=2, relief=SOLID, padx=10, pady=10)
 #----------------------------------------------
 
 #------------------Para ingresar Nombre--------
@@ -147,21 +160,19 @@ entradaApellido.grid(row=1, column=1, pady=10, padx=20)
 
 #---------Menu desplegable tipo de firma--------
 Label(ConfigInicial, text="Tipo de Firma: ", font=(fuente, 14)).grid(row=2, column=0, sticky=W, pady=10)
-opcionesFirma = ["Manuscrito","Nombre"]
+opcionesFirma = ["Seleccionar...","Manuscrito","Nombre"]
 Firmado = StringVar()
 Firmado.set(opcionesFirma[0])
 menuFirma = OptionMenu(ConfigInicial, Firmado,*opcionesFirma)
-menuFirma.grid(row=2, column=1, pady=10, padx=20)
-menuFirma.config(width=10, font=(fuente, 14))
+menuFirma.grid(row=2, column=1, pady=10, padx=0)
+menuFirma.config(width=15, font=(fuente, 14))
+
+botonAceptar = Button(ConfigInicial, text="Aceptar",command =lambda: tipodeFirma(Firmado.get()),font=(fuente, 14)).grid(row=2, column=2, sticky=W, pady=10,padx=10)
 #-----------------------------------------------
 
 #------------Cargar Firma---------------------
-
 ubicacionFirma = StringVar()
-Label(ConfigInicial, text="Cargar Firma: ", font=(fuente, 14)).grid(row=3, column=0, sticky=W, pady=10)
-botonCargar = Button(ConfigInicial, text="Abrir",command = abrirFirma,font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=10)
-botonMostrar = Button(ConfigInicial, text="Cargar",
-                      command = lambda: cargarFirma(entradaNombre.get(),entradaApellido.get(),Firmado.get(),ubicacionFirma.get()),font=(fuente, 14)).grid(row=3, column=1, sticky=W, pady=10,padx=80)
+
 #Label(ConfigInicial, text="...", textvariable = ubicacionFirma, font=(fuente, 14)).grid(row=4, column=0, sticky=W, pady=10) #Para probar nada mas
 #--------------------------------------------
 
@@ -169,29 +180,31 @@ ConfigInicial.place(x=50, y=150)
 
 
 Label(firmamos, text="Firma ingresada: ", font=(fuente, 14)).grid(row=0, column=0, sticky=W, pady=10)
-
-
-
 firmamos.place(x=50,y=400)
+
+Label(progreso, text="Progreso ", font=(fuente, 14)).grid(row=0, column=0, sticky=W, pady=10)
+progreso.place(x=580,y=370)
+
+
 
 #--------Frame Derecho-------------------
 EntCarpeta = StringVar()
 SalCarpeta = StringVar()
 
 Label(archivos, text="Entrada Carpeta: ", font=(fuente, 14)).grid(row=0, column=0, sticky=W, pady=10)
-botonEntCarpeta = Button(archivos, text="Abrir",command = carpEntrada,font=(fuente, 14)).grid(row=0, column=1, sticky=W, pady=10,padx=20)
+botonEntCarpeta = Button(archivos, text="  Abrir carpeta..  ",command = carpEntrada,font=(fuente, 14)).grid(row=0, column=1, sticky=W, pady=10,padx=20)
 Label(archivos, text="Salida Carpeta: ", font=(fuente, 14)).grid(row=1, column=0, sticky=W, pady=10)
-botonSalCarpeta = Button(archivos, text="Abrir",command = carpSalida,font=(fuente, 14)).grid(row=1, column=1, sticky=W, pady=10,padx=20)
+botonSalCarpeta = Button(archivos, text="  Abrir carpeta..  ",command = carpSalida,font=(fuente, 14)).grid(row=1, column=1, sticky=W, pady=10,padx=20)
 
 #Label(archivos, text="...", textvariable = EntCarpeta, font=(fuente, 14)).grid(row=3, column=0, sticky=W, pady=10) #Para probar nada mas
 #Label(archivos, text="...", textvariable = SalCarpeta, font=(fuente, 14)).grid(row=4, column=0, sticky=W, pady=10) #Para probar nada mas
 
-botonComenzar = Button(archivos, width=15, text='Comenzar', font=(fuente, 14)
+botonComenzar = Button(archivos, width=15, text='Verificar', font=(fuente, 14)
                        , command=lambda: resumen(entradaNombre.get(),entradaApellido.get(),Firmado.get(),EntCarpeta.get(),SalCarpeta.get()))
 botonComenzar.grid(row=7, column=1, pady=10, padx=20)
 
 #-------------------------------------------
-archivos.place(x=500, y=150)
+archivos.place(x=580, y=150)
 
 
 root.mainloop()
