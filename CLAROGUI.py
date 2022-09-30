@@ -9,7 +9,7 @@ from tkinter import *
 from PIL import ImageTk,Image,ImageDraw,ImageFont
 from tkinter import messagebox
 from tkinter import filedialog
-from datetime import datetime
+from datetime import date
 
 
 #---------FUNCIONES-----------
@@ -65,22 +65,18 @@ def cargarFirma(nombre,apellido,opcion,ubicFirma):
         firmafinal.image = firmapuestaimg
         firmafinal.grid(row=1, column=0,padx=80)
     else:
+        today = date.today()
+        h = today.strftime("%d/%m/%Y")
         base=Image.open("base.png").convert("RGBA")
         txt=Image.new("RGBA",base.size,(255,255,255,0))
-        fnt=ImageFont.truetype("arial.ttf",50)
+        fnt=ImageFont.truetype("times.ttf",20)
+        fnt1=ImageFont.truetype("times.ttf",12)
         Nombres=ImageDraw.Draw(txt)
-        Nombres.text((150,200),str(nombre)+" "+str(apellido),font=fnt,fill=(0,0,0,250))
+        fecha = f'Firmado {h}'
+        Nombres.text((2,7),str(nombre)+" "+str(apellido),font=fnt,fill=(0,0,0))
+        Nombres.text((2,28),fecha ,font=fnt1,fill=(0,0,0))
         out=Image.alpha_composite(base,txt)
         out.save("Nombres.png")
-
-        today=datetime.today()
-        base_1=Image.open("base_1.png").convert("RGBA")
-        txt_1=Image.new("RGBA",base_1.size,(255,255,255,0))
-        Fecha=ImageDraw.Draw(txt_1)
-        Fecha.text((150,200),str(today),font=fnt,fill=(0,0,0,250))
-        out=Image.alpha_composite(base_1,txt_1)
-        #out.show()
-        out.save("Fecha_hora.png")
         
         firmapuesta = Image.open("Nombres.png")
         firmapuesta = firmapuesta.resize((220,80))
