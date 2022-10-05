@@ -9,7 +9,13 @@ from tkinter import *
 from PIL import ImageTk,Image,ImageDraw,ImageFont
 from tkinter import messagebox
 from tkinter import filedialog
+<<<<<<< HEAD
 import datetime
+=======
+from datetime import date
+import sys
+import os
+>>>>>>> f441e9e569809b38173bf4243cd54d104de5c4ee
 
 
 #---------FUNCIONES-----------
@@ -49,10 +55,10 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
                                    +"\n\nCarpeta de Salida: "+carpetasalida)
     #Label(root, text=response).pack()
     
-    # if response == 1:
-    #     Label(root, text="Stop it bro").pack()
-    # else:
-    #     Label(root, text="What have u done").pack()
+    if response == 1:
+        os.system('python sign_pdf.py -i ".\static\Letter of confirmation.pdf" -s "BM" -x 330 -y 280')
+    else:
+        Label(root, text="What have u done").pack()
     
 def cargarFirma(nombre,apellido,opcion,ubicFirma):
     
