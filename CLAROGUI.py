@@ -12,7 +12,6 @@ from tkinter import filedialog
 <<<<<<< HEAD
 import datetime
 =======
-from datetime import date
 import sys
 import os
 >>>>>>> f441e9e569809b38173bf4243cd54d104de5c4ee
