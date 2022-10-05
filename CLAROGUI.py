@@ -9,7 +9,7 @@ from tkinter import *
 from PIL import ImageTk,Image,ImageDraw,ImageFont
 from tkinter import messagebox
 from tkinter import filedialog
-from datetime import date
+import datetime
 
 
 #---------FUNCIONES-----------
@@ -65,8 +65,9 @@ def cargarFirma(nombre,apellido,opcion,ubicFirma):
         firmafinal.image = firmapuestaimg
         firmafinal.grid(row=1, column=0,padx=80)
     else:
-        today = date.today()
-        h = today.strftime("%d/%m/%Y")
+
+        fecha_hora = datetime.datetime.now()
+        h = fecha_hora.strftime("%d/%m/%Y, %H:%M:%S")
         base=Image.open("base.png").convert("RGBA")
         txt=Image.new("RGBA",base.size,(255,255,255,0))
         fnt=ImageFont.truetype("times.ttf",20)
