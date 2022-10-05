@@ -9,12 +9,12 @@ from tkinter import *
 from PIL import ImageTk,Image,ImageDraw,ImageFont
 from tkinter import messagebox
 from tkinter import filedialog
-<<<<<<< HEAD
+
 import datetime
-=======
+
 import sys
 import os
->>>>>>> f441e9e569809b38173bf4243cd54d104de5c4ee
+
 
 
 #---------FUNCIONES-----------
