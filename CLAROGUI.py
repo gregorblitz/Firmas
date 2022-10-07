@@ -70,14 +70,23 @@ def cargarFirma(nombre,apellido,opcion,ubicFirma):
         firmafinal.image = firmapuestaimg
         firmafinal.grid(row=1, column=0,padx=80)
     else:
+
+        Tamaño_N=len(str(nombre)+str(apellido))
+
         
 
         fecha_hora = datetime.datetime.now()
         h = fecha_hora.strftime("%d/%m/%Y, %H:%M:%S")
         base=Image.open("base.png").convert("RGBA")
         txt=Image.new("RGBA",base.size,(255,255,255,0))
-        fnt=ImageFont.truetype("times.ttf",20)
-        fnt1=ImageFont.truetype("times.ttf",12)
+        if Tamaño_N <19 :
+         fnt=ImageFont.truetype("times.ttf",20)
+         fnt1=ImageFont.truetype("times.ttf",12)
+        else:
+                fnt=ImageFont.truetype("times.ttf",14)
+                fnt1=ImageFont.truetype("times.ttf",11)
+        
+
         Nombres=ImageDraw.Draw(txt)
         fecha = f'Firmado {h}'
         Nombres.text((2,7),str(nombre)+" "+str(apellido),font=fnt,fill=(0,0,0))
