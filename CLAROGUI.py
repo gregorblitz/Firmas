@@ -70,6 +70,7 @@ def cargarFirma(nombre,apellido,opcion,ubicFirma):
         firmafinal.image = firmapuestaimg
         firmafinal.grid(row=1, column=0,padx=80)
     else:
+        
 
         fecha_hora = datetime.datetime.now()
         h = fecha_hora.strftime("%d/%m/%Y, %H:%M:%S")
