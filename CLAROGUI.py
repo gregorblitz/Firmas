@@ -64,11 +64,40 @@ def cargarFirma(nombre,apellido,opcion,ubicFirma):
     if opcion=="Manuscrito":
         firmapuesta = Image.open(ubicFirma)
         firmapuesta = firmapuesta.resize((220,80))
+  
+        img1 = Image.open(r"Base_m.png") 
+        img1=img1.resize((240,110))
+        img2 = firmapuesta
+  
+        img1.paste(img2,(10,0)) 
+  
+        #img1.show() 
+      
+        fecha_hora = datetime.datetime.now()
+        h = fecha_hora.strftime("%d/%m/%Y, %H:%M:%S")
+        #base=Image.open("img2.png").convert("RGBA")
+        base=img1.convert("RGBA")
+        txt=Image.new("RGBA",base.size,(255,255,255,0))
+        fnt1=ImageFont.truetype("times.ttf",12)
+        Nombres=ImageDraw.Draw(txt)
+        fecha = f'Firmado {h}'
+        Nombres.text((30,80),fecha ,font=fnt1,fill=(0,0,0))
+        out=Image.alpha_composite(base,txt)
+        out.save("Manuscrito_fecha.png")
+        
+        firmapuesta=out
         firmapuestaimg = ImageTk.PhotoImage(firmapuesta)
+
                               
         firmafinal = Label(firmamos,image=firmapuestaimg) 
         firmafinal.image = firmapuestaimg
         firmafinal.grid(row=1, column=0,padx=80)
+        
+        
+        firmafecha = Image.open("Manuscrito_fecha.png")
+        firmafecha = firmafecha.resize((220,80))
+        firmafecha.save("firmafinal.png")
+        
     else:
 
         Tamaño_N=len(str(nombre)+str(apellido))
@@ -101,8 +130,13 @@ def cargarFirma(nombre,apellido,opcion,ubicFirma):
         firmafinal = Label(firmamos,image=firmapuestaimg) 
         firmafinal.image = firmapuestaimg
         firmafinal.grid(row=1, column=0,padx=80)
+        
+        firmafecha = Image.open("Nombres.png")
+        firmafecha = firmafecha.resize((220,80))
+        firmafecha.save("firmafinal.png")
 
 #----------------------------------------
+
 
 
 #------Configuraciones Iniciales---------------
