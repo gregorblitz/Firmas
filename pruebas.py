@@ -1,3 +1,4 @@
+from ast import Str
 from tkinter import *
 from PIL import ImageTk,Image,ImageDraw,ImageFont
 from tkinter import messagebox
@@ -43,9 +44,10 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
     
     if nombre == "":
         errorNombre = messagebox.showerror("Error","No ingresó el campo Nombre")
-    if nombre.isalpha()== False:
+    if all(x.isalpha() or x.isspace() for x in nombre)==False:
             errorNombre = messagebox.showerror("Error","Ingreso un caracter no valido en el campo nombre")
-    if apellido.isalpha()== False:
+    
+    if all(x.isalpha() or x.isspace() for x in apellido)==False:
             errorApellido = messagebox.showerror("Error","Ingreso un caracter no valido en el campo apellido")
     if apellido == "":
         errorApellido = messagebox.showerror("Error","No ingresó el campo Apellido")
@@ -92,6 +94,7 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
             last_page=[]
             number_pages=[]
             packtopdf=[]
+            no_signed=[]
             cont=0
             aux1=0
             aux2=0
@@ -166,9 +169,8 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
                 print(newdata)
                 newx=newdata[0]
                 newy=newdata[1]
-        
-                
-
+                if newdata==[5000,5000]:
+                    no_signed.append(name_doc[int(j)])
                 ##Conociendo el tamaño de la firma  
                 img = Image.open('firmafinal.png') 
                 
@@ -204,7 +206,9 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
                 name_file=(EntCarpeta.get()+'/'+i)
                 shutil.move(name_file,SalCarpeta.get())
             for i in name_pages:
-                 os.remove(i) 
+                 os.remove(i)
+            aux3="se firmaron "+ str((len(name_doc)-len(no_signed)))+ " de "+str(len(name_doc))+" documentos disponibles"
+            Label(progreso, text=aux3, font=(fuente, 11)).grid(row=1, column=0, sticky=W, pady=10)
         
 def cargarFirma(nombre,apellido,opcion,ubicFirma):
     
