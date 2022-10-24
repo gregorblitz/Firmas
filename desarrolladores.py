@@ -220,7 +220,7 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
                  os.remove(i)
             aux3="Se firmaron "+ str((len(name_doc)-len(no_signed)))+ " de "+str(len(name_doc))+" documentos disponibles"
             Label(progreso, text=aux3, font=(fuente, 12)).pack()
-            Label(progreso, text="No se firmaron los siguientes documentos:", font=(fuente, 12)).pack()
+            Label(progreso, text="No se firmaron los sgit iguientes documentos:", font=(fuente, 12)).pack()
             scrollbar = Scrollbar(progreso)
             scrollbar.pack( side = RIGHT, fill = Y )
     
