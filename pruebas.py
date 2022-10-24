@@ -1,4 +1,4 @@
-from ast import Str
+"""from ast import Str
 from tkinter import *
 from PIL import ImageTk,Image,ImageDraw,ImageFont
 from tkinter import messagebox
@@ -209,6 +209,7 @@ def resumen(nombre,apellido,tipofirma,carpetaentrada,carpetasalida):
                  os.remove(i)
             aux3="se firmaron "+ str((len(name_doc)-len(no_signed)))+ " de "+str(len(name_doc))+" documentos disponibles"
             Label(progreso, text=aux3, font=(fuente, 11)).grid(row=1, column=0, sticky=W, pady=10)
+            Label(progreso, text=no_signed, font=(fuente, 11)).grid(row=2, column=0, sticky=W, pady=10)
         
 def cargarFirma(nombre,apellido,opcion,ubicFirma):
     
@@ -405,3 +406,4 @@ archivos.place(x=580, y=150)
 
 
 root.mainloop()
+"""
